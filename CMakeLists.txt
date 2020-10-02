@@ -35,25 +35,34 @@ find_package(GTest CONFIG REQUIRED)
 InstallVendor(Core https://CorrupD:hiddenhand@git.nipqer.nl/CorrupD/Core.git)
 
 set(Headers
-        ${PROJECT_SOURCE_DIR}/include/Version.h)
+        ${PROJECT_SOURCE_DIR}/include/Version.h
+        ${PROJECT_SOURCE_DIR}/include/StringBuilder.h
+        ${PROJECT_SOURCE_DIR}/include/MarkupLanguage.h
+        ${PROJECT_SOURCE_DIR}/include/HtmlLanguage.h
+        ${PROJECT_SOURCE_DIR}/include/XmlLanguage.h
+        ${PROJECT_SOURCE_DIR}/include/INIConfig.h)
 
 set(Sources
-	"")
+        ${PROJECT_SOURCE_DIR}/src/StringBuilder.cpp
+        ${PROJECT_SOURCE_DIR}/src/MarkupLanguage.cpp
+        ${PROJECT_SOURCE_DIR}/src/HtmlLanguage.cpp
+        ${PROJECT_SOURCE_DIR}/src/XmlLanguage.cpp
+        ${PROJECT_SOURCE_DIR}/src/INIConfig.cpp)
 
 set(Test-Sources
-	"")
+        ${PROJECT_SOURCE_DIR}/test/HtmlLanguage.cpp
+        ${PROJECT_SOURCE_DIR}/test/XmlLanguage.cpp
+        ${PROJECT_SOURCE_DIR}/test/INICOnfig.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/test)
-add_library(${This}-lib ${Headers} ${Sources})
-add_executable(${This} ${PROJECT_SOURCE_DIR}/src/main.cpp)
+add_library(${This} ${Headers} ${Sources})
 add_executable(${This}-test ${Test-Sources} ${PROJECT_SOURCE_DIR}/test/main-test.cpp)
 
-target_link_libraries(${This}-lib PUBLIC Core)
-target_link_libraries(${This} PUBLIC ${This}-lib Core)
-target_link_libraries(${This}-test PUBLIC GTest::gtest ${This}-lib Core)
+target_link_libraries(${This} PUBLIC Core)
+target_link_libraries(${This}-test PUBLIC GTest::gtest ${This} Core)
 
 if(WIN32)
-        target_compile_definitions(${This}-lib PUBLIC BUILD _CRT_SECURE_NO_WARNINGS)
+        target_compile_definitions(${This} PUBLIC BUILD _CRT_SECURE_NO_WARNINGS)
 endif()
 
 enable_testing()
