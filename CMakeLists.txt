@@ -24,7 +24,7 @@ function(InstallVendor project_name git_repo)
         endif()
 endfunction()
 
-set(This project)
+set(This MarkupLanguage)
 set(VERSION 0.1)
 project(${This} LANGUAGES C CXX VERSION ${VERSION})
 
