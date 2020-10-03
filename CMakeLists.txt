@@ -54,9 +54,9 @@ set(Test-Sources
         ${PROJECT_SOURCE_DIR}/test/XmlLanguage.cpp
         ${PROJECT_SOURCE_DIR}/test/INICOnfig.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/test)
 add_library(${This} ${Headers} ${Sources})
 add_executable(${This}-test ${Test-Sources} ${PROJECT_SOURCE_DIR}/test/main-test.cpp)
+target_include_directories(${This} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 target_link_libraries(${This} PUBLIC Core)
 target_link_libraries(${This}-test PUBLIC GTest::gtest ${This} Core)
