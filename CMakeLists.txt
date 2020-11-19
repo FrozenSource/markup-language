@@ -19,7 +19,7 @@ function(InstallVendor project_name git_repo)
                         SUBBUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/${project_name}-sub"
                 )
                 FetchContent_MakeAvailable(${project_name})
-                set(${project_name} CACHE INTERNAL "")
+                set(${project_name} 1)
                 message(STATUS "Found ${project_name}")
         endif()
 endfunction()
@@ -52,7 +52,7 @@ set(Sources
 set(Test-Sources
         ${PROJECT_SOURCE_DIR}/test/HtmlLanguage.cpp
         ${PROJECT_SOURCE_DIR}/test/XmlLanguage.cpp
-        ${PROJECT_SOURCE_DIR}/test/INICOnfig.cpp)
+        ${PROJECT_SOURCE_DIR}/test/INIConfig.cpp)
 
 add_library(${This} ${Headers} ${Sources})
 add_executable(${This}-test ${Test-Sources} ${PROJECT_SOURCE_DIR}/test/main-test.cpp)
