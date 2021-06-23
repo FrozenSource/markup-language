@@ -1,6 +1,6 @@
 #include <MarkupLanguage.h>
 
-cMarkupNode::cMarkupNode(const string& sTagName, const cMarkupNodeType& eType) {
+cMarkupNode::cMarkupNode(const std::string& sTagName, const cMarkupNodeType& eType) {
     this->SetTagName(sTagName);
     this->SetNodeType(eType);
 }
@@ -22,11 +22,11 @@ cMarkupNode& cMarkupNode::operator=(const cMarkupNode& oNode) {
     return *this;
 }
 
-void cMarkupNode::SetTagName(const string& sTagName) {
+void cMarkupNode::SetTagName(const std::string& sTagName) {
     this->psTagName = sTagName;
 }
 
-string cMarkupNode::GetTagName() {
+std::string cMarkupNode::GetTagName() {
     return this->psTagName;
 }
 
@@ -38,33 +38,33 @@ cMarkupNodeType cMarkupNode::GetNodeType() {
     return this->peType;
 }
 
-void cMarkupNode::SetValue(const string& sValue) {
+void cMarkupNode::SetValue(const std::string& sValue) {
     if (this->peType == cMarkupNodeType::NO_CLOSE ||
         this->peType == cMarkupNodeType::SINGLE_CLOSE)
         throw std::runtime_error("Node needs to have a secundary closing node.");
     this->psValue = sValue;
 }
 
-string cMarkupNode::GetValue() {
+std::string cMarkupNode::GetValue() {
     return this->psValue;
 }
 
-void cMarkupNode::SetNodePrefix(const string& sPrefix) {
+void cMarkupNode::SetNodePrefix(const std::string& sPrefix) {
     if (this->peType != cMarkupNodeType::NO_CLOSE &&
         this->peType != cMarkupNodeType::SINGLE_CLOSE)
         throw std::runtime_error("prefixes and postfixes should not be used in a secundary node closing style.");
     this->psNodePrefix = sPrefix;
 }
 
-string cMarkupNode::GetNodePrefix() {
+std::string cMarkupNode::GetNodePrefix() {
     return this->psNodePrefix;
 }
 
-void cMarkupNode::SetNodePostfix(const string& sPostfix) {
+void cMarkupNode::SetNodePostfix(const std::string& sPostfix) {
     this->psNodePostfix = sPostfix;
 }
 
-string cMarkupNode::GetNodePostfix() {
+std::string cMarkupNode::GetNodePostfix() {
     return this->psNodePostfix;
 }
 
@@ -84,31 +84,31 @@ bool cMarkupNode::GetPrependAdditionalChildren() {
     return this->pbPrependAdditionalChildren;
 }
 
-bool cMarkupNode::AddAttribute(const string& sKey, const string& sValue) {
+bool cMarkupNode::AddAttribute(const std::string& sKey, const std::string& sValue) {
     if (this->paAttributes.find(sKey) != this->paAttributes.end()) return false;
     this->paAttributes.insert({sKey, sValue});
     return true;
 }
 
-bool cMarkupNode::AddAttribute(const string& sKey) {
+bool cMarkupNode::AddAttribute(const std::string& sKey) {
     if (this->paAttributes.find(sKey) != this->paAttributes.end()) return false;
     this->paAttributes.insert({sKey, ""});
     return true;
 }
 
-string cMarkupNode::GetAttribute(const string& sKey) {
+std::string cMarkupNode::GetAttribute(const std::string& sKey) {
     if (this->paAttributes.find(sKey) == this->paAttributes.end()) return "";
     return this->paAttributes[sKey];
 }
 
-bool cMarkupNode::SetAttributeValue(const string& sKey, const string& sValue) {
+bool cMarkupNode::SetAttributeValue(const std::string& sKey, const std::string& sValue) {
     auto oAttribute = this->paAttributes.find(sKey);
     if (oAttribute == this->paAttributes.end()) return false;
     this->paAttributes[sKey] = sValue;
     return true;
 }
 
-bool cMarkupNode::RemoveAttribute(const string& sKey) {
+bool cMarkupNode::RemoveAttribute(const std::string& sKey) {
     auto oAttribute = this->paAttributes.find(sKey);
     if (oAttribute == this->paAttributes.end()) return false;
     this->paAttributes.erase(sKey);
@@ -143,7 +143,7 @@ cMarkupNode& cMarkupNode::GetChild(size_t uiIndex) {
     return this->paChildren[uiIndex];
 }
 
-string cMarkupNode::ToString(std::vector<cMarkupNode> aAdditionalChildNodes) {
+std::string cMarkupNode::ToString(std::vector<cMarkupNode> aAdditionalChildNodes) {
     Append("<");
     if (this->psNodePrefix.size() > 0) Append(this->psNodePrefix);
     Append(this->psTagName);

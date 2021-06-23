@@ -1,5 +1,6 @@
 #pragma once
-#include <Core.hpp>
+#include <string>
+#include <sstream>
 
 class cStringBuilder {
 public:
@@ -8,11 +9,11 @@ public:
     
     cStringBuilder& operator=(const cStringBuilder& oBuilder);
 
-    void Append(const string& sValue);
-    void AppendLine(const string& sValue);
-    void AppendIndented(byte iIndents, const string& sValue);
-    void AppendIndentedLine(byte iIndents, const string& sValue);
-    string ToString();
+    void Append(const std::string& sValue);
+    void AppendLine(const std::string& sValue);
+    void AppendIndented(unsigned char iIndents, const std::string& sValue);
+    void AppendIndentedLine(unsigned char iIndents, const std::string& sValue);
+    std::string ToString();
 
 protected:
 

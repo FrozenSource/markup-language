@@ -1,4 +1,5 @@
 #include <HtmlLanguage.h>
+#include <algorithm>
 
 MAKE_ENUM_CPP(cHtmlNodeType,
     NONE,
@@ -30,7 +31,11 @@ cHtmlNode::cHtmlNode() {
 }
 
 void cHtmlNode::SetHtmlNodeType(const cHtmlNodeType& eType) {
-    this->SetTagName(ToLowercaseCP(EnumToString(eType)));
+    std::string sType = cHtmlNodeTypeToString(eType);
+    std::for_each(sType.begin(), sType.end(), [](char & c) {
+        c = ::tolower(c);
+    });
+    this->SetTagName(sType);
     this->SetNodeType(C_HTML_USES_NODE_CLOSE.at(eType));
     this->peHtmlType = eType;
 }
@@ -60,15 +65,15 @@ cHtmlContainer& cHtmlContainer::operator=(const cHtmlContainer& oContainer) {
     return *this;
 }
 
-void cHtmlContainer::SetTitle(const string& sTitle) {
+void cHtmlContainer::SetTitle(const std::string& sTitle) {
     this->psTitle = sTitle;
 }
 
-string cHtmlContainer::GetTitle() {
+std::string cHtmlContainer::GetTitle() {
     return this->psTitle;
 }
 
-void cHtmlContainer::SetIcon(const string& sPath, uint uiWidth, uint uiHeight) {
+void cHtmlContainer::SetIcon(const std::string& sPath, uint uiWidth, uint uiHeight) {
     this->psIconPath = sPath;
     this->puiIconWidth = uiWidth;
     this->puiIconHeight = uiHeight;
@@ -112,7 +117,7 @@ bool cHtmlContainer::RemoveNodeFromBody(size_t uiIndex) {
     return this->poBody.RemoveChild(uiIndex);
 }
 
-cHtmlNode cHtmlContainer::CreateComment(const string& sText) {
+cHtmlNode cHtmlContainer::CreateComment(const std::string& sText) {
     cHtmlNode oComment {};
     oComment.SetNodeType(cMarkupNodeType::NO_CLOSE);
     oComment.SetNodePrefix("!--");
@@ -122,13 +127,13 @@ cHtmlNode cHtmlContainer::CreateComment(const string& sText) {
     return oComment;    
 }
 
-cHtmlNode cHtmlContainer::CreateJSInclude(const string& sPath) {
+cHtmlNode cHtmlContainer::CreateJSInclude(const std::string& sPath) {
     cHtmlNode oIncludeJS {cHtmlNodeType::SCRIPT};
     oIncludeJS.AddAttribute("src", sPath);
     return oIncludeJS;
 }
 
-cHtmlNode cHtmlContainer::CreateCSSInclude(const string& sPath) {
+cHtmlNode cHtmlContainer::CreateCSSInclude(const std::string& sPath) {
     cHtmlNode oIncludeCSS {cHtmlNodeType::LINK};
     oIncludeCSS.AddAttribute("href", sPath);
     oIncludeCSS.AddAttribute("rel", "stylesheet");
@@ -136,7 +141,7 @@ cHtmlNode cHtmlContainer::CreateCSSInclude(const string& sPath) {
     return oIncludeCSS;
 }
 
-string cHtmlContainer::ToString() {
+std::string cHtmlContainer::ToString() {
     cHtmlNode oDoctype {cHtmlNodeType::DOCTYPE};
     oDoctype.SetNodePrefix("!");
     oDoctype.AddAttribute("html");

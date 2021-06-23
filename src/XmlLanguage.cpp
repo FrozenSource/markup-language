@@ -1,6 +1,6 @@
 #include <XmlLanguage.h>
 
-cXmlNode::cXmlNode(const string& sTagName, const cMarkupNodeType& eNodeType) {
+cXmlNode::cXmlNode(const std::string& sTagName, const cMarkupNodeType& eNodeType) {
     this->SetTagName(sTagName);
     this->SetNodeType(eNodeType);
 }
@@ -38,7 +38,7 @@ bool cXmlContainer::RemoveNode(size_t uiIndex) {
     return true;
 }
 
-string cXmlContainer::ToString() {
+std::string cXmlContainer::ToString() {
     cXmlNode oDocType {"xml", cMarkupNodeType::NO_CLOSE};
     oDocType.SetNodePrefix("?");
     oDocType.SetNodePostfix("?");

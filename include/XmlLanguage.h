@@ -1,10 +1,9 @@
 #pragma once
-#include <Core.hpp>
 #include <MarkupLanguage.h>
 
 class cXmlNode : public cMarkupNode {
 public:
-    cXmlNode(const string& sTagName, const cMarkupNodeType& eNodeType);
+    cXmlNode(const std::string& sTagName, const cMarkupNodeType& eNodeType);
     cXmlNode(const cXmlNode& oNode);
 
     cXmlNode& operator=(const cXmlNode& oNode);
@@ -22,7 +21,7 @@ public:
     cXmlNode& GetNode(size_t uiIndex);
     bool RemoveNode(size_t uiIndex);
 
-    string ToString();
+    std::string ToString();
 protected:
     std::vector<cXmlNode> paNodes;
 };
