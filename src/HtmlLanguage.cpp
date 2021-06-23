@@ -73,7 +73,7 @@ std::string cHtmlContainer::GetTitle() {
     return this->psTitle;
 }
 
-void cHtmlContainer::SetIcon(const std::string& sPath, uint uiWidth, uint uiHeight) {
+void cHtmlContainer::SetIcon(const std::string& sPath, unsigned int uiWidth, unsigned int uiHeight) {
     this->psIconPath = sPath;
     this->puiIconWidth = uiWidth;
     this->puiIconHeight = uiHeight;

@@ -58,7 +58,7 @@ class cHtmlContainer : public cStringBuilder {
     void SetTitle(const std::string& sTitle);
     std::string GetTitle();
 
-    void SetIcon(const std::string& sPath, uint uiWidth, uint uiHeight);
+    void SetIcon(const std::string& sPath, unsigned int uiWidth, unsigned int uiHeight);
     void RemoveIcon();
 
     cHtmlNode& GetHead();
@@ -84,7 +84,7 @@ class cHtmlContainer : public cStringBuilder {
     std::string psTitle = "%none%";
 
     std::string psIconPath;
-    uint puiIconWidth = 0, puiIconHeight = 0;
+    unsigned int puiIconWidth = 0, puiIconHeight = 0;
 
     friend class cHtmlNode;
 };
