@@ -114,24 +114,24 @@ void cINIContainer::Clear() {
     this->poBuffer.clear();
 }
 
-void ltrim(std::string& s) {
+void __markup__ltrim(std::string& s) {
     s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
                 return !std::isspace(ch);
             }));
 }
 
-void rtrim(std::string& s) {
+void __markup__rtrim(std::string& s) {
     s.erase(std::find_if(s.rbegin(), s.rend(),
                          [](unsigned char ch) { return !std::isspace(ch); })
                 .base(),
             s.end());
 }
 
-void trim(std::string& s) {
-    ltrim(s);
-    rtrim(s);
+void __markup__trim(std::string& s) {
+    __markup__ltrim(s);
+    __markup__rtrim(s);
 }
-std::vector<std::string> Split(std::string str, const std::string& delim) noexcept {
+std::vector<std::string> __markup__split(std::string str, const std::string& delim) noexcept {
     std::vector<std::string> result;
     while (str.size()) {
         size_t index = str.find(delim);
@@ -150,7 +150,7 @@ std::vector<std::string> Split(std::string str, const std::string& delim) noexce
 bool cINIContainer::FromString(const std::string& sStr) {
     Clear();
     bool bWindowsStyle = (sStr.find("\r\n") != std::string::npos);
-    auto aLines = Split(sStr, bWindowsStyle ? "\r\n" : "\n");
+    auto aLines = __markup__split(sStr, bWindowsStyle ? "\r\n" : "\n");
 
     cINIGroup* pGroup = nullptr;
     for (auto& sLine : aLines) {
@@ -177,8 +177,8 @@ bool cINIContainer::FromString(const std::string& sStr) {
             }
             std::string sKey = sLine.substr(0, uiEqual);
             std::string sValue = sLine.substr(uiEqual + 1, sLine.size() - uiEqual - 1);
-            trim(sKey);
-            trim(sValue);
+            __markup__trim(sKey);
+            __markup__trim(sValue);
             pGroup->AddProperty(sKey, sValue);
         } else {
             Clear();
